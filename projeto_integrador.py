@@ -11,7 +11,56 @@ conn = mysql.connector.connect(
 #executar comandos no SQL
 cursor = conn.cursor()
 
+#adicionar uma amostra
+def adicionar_amostra():
+    o3 = float(input("digite o valor de O3 da amostra: "))
+    co = float(input("digite o valor de CO da amostra: "))
+    no2 = float(input("digite o valor de NO2 da amostra: "))
+    so2 = float(input("digite o valor de SO2 da amostra: "))
+    mp10 = float(input("digite o valor de MP10 da amostra: "))
+    mp25 = float(input("digite o valor de MP25 da amostra: "))
+    sql = "INSERT INTO amostras (o3, co, no2, so2, mp10, mp25) VALUES (%s, %s, %s, %s, %s, %s)"
+    values = (o3, co, no2, so2, mp10, mp25)
+    cursor.execute(sql, values)
+    conn.commit()
+    print("Amostra adicionada com sucesso!")
 
+#excluir uma amostra
+def excluir_amostra():
+    id = input("digite o ID da amostra que deseja excluir: ")
+    sql = "DELETE FROM amostras WHERE id = %s"
+    values = (id,)
+    cursor.execute(sql, values)
+    conn.commit()
+    print("amostra excluida com sucesso")
+
+#alterar uma amostra
+def alterar_amostra():
+    id = input("digite o ID da amostra que deseja alterar: ")
+    o3 = float(input("digite o novo valor de O3 da amostra: "))
+    co = float(input("digite o novo valor de CO da amostra: "))
+    no2 = float(input("digite o novo valor de NO2 da amostra: "))
+    so2 = float(input("digite o novo valor de SO2 da amostra: "))
+    mp10 = float(input("digite o novo valor de MP10 da amostra: "))
+    mp25 = float(input("digite o novo valor de MP25 da amostra: "))
+    sql = "UPDATE amostras SET o3 = %s, co = %s, no2 = %s, so2 = %s, mp10 = %s, mp25 = %s WHERE id = %s"
+    values = (o3, co, no2, so2, mp10, mp25, id)
+    cursor.execute(sql, values)
+    conn.commit()
+    print("amostra alterada com sucesso")
+
+#mostrar todas as amostras
+def mostrar_amostras():
+    cursor.execute("SELECT * FROM amostras")
+    result = cursor.fetchall()
+    for row in result:
+        print("ID:", row[0], "\nO3:", row[1], "\nCO:", row[2], "\nNO2:", row[3], "\nSO2:", row[4], "\nMP10:", row[5], "\nMP25:", row[6], "\n------------")
+
+# testar as amostras
+def teste_amostra():
+
+
+    # consulata
     cursor.execute(f"SELECT o3, co, no2, so2, mp10, mp25 FROM amostras")
 
 
@@ -67,3 +116,29 @@ cursor = conn.cursor()
         efeito_saude = "Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. Aumento de mortes prematuras em pessoas de grupos sensíveis"
 
     print(f"{qualidade_do_ar}\n{efeito_saude}")
+
+
+#menu
+while True:
+    print("\n\nescolha uma opcao:")
+    print("1: adicionar amostra")
+    print("2: excluir amostra")
+    print("3: alterar amostra")
+    print("4: mostrar todas as amostras")
+    print("5: testar amostras")
+    print("6: sair")
+    opcao = input(">")
+    if opcao == "1":
+        adicionar_amostra()
+    elif opcao == "2":
+        excluir_amostra()
+    elif opcao == "3":
+        alterar_amostra()
+    elif opcao == "4":
+        mostrar_amostras()
+    elif opcao == "5":
+        teste_amostra()
+    elif opcao == "6":
+        break
+    else:
+        print("escolha uma das opcoes abaixo")
