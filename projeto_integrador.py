@@ -13,41 +13,60 @@ cursor = conn.cursor()
 
 #adicionar uma amostra
 def adicionar_amostra():
-    o3 = float(input("digite o valor de O3 da amostra: "))
-    co = float(input("digite o valor de CO da amostra: "))
-    no2 = float(input("digite o valor de NO2 da amostra: "))
-    so2 = float(input("digite o valor de SO2 da amostra: "))
-    mp10 = float(input("digite o valor de MP10 da amostra: "))
-    mp25 = float(input("digite o valor de MP25 da amostra: "))
-    sql = "INSERT INTO amostras (o3, co, no2, so2, mp10, mp25) VALUES (%s, %s, %s, %s, %s, %s)"
-    values = (o3, co, no2, so2, mp10, mp25)
-    cursor.execute(sql, values)
-    conn.commit()
-    print("Amostra adicionada com sucesso!")
+
+    certo = 1
+    while certo == 1:
+        try:
+            o3 = float(input("digite o valor de O3 da amostra: "))
+            co = float(input("digite o valor de CO da amostra: "))
+            no2 = float(input("digite o valor de NO2 da amostra: "))
+            so2 = float(input("digite o valor de SO2 da amostra: "))
+            mp10 = float(input("digite o valor de MP10 da amostra: "))
+            mp25 = float(input("digite o valor de MP25 da amostra: "))
+            sql = "INSERT INTO amostras (o3, co, no2, so2, mp10, mp25) VALUES (%s, %s, %s, %s, %s, %s)"
+            values = (o3, co, no2, so2, mp10, mp25)
+            cursor.execute(sql, values)
+            conn.commit()
+            print("\nAmostra adicionada com sucesso!")
+            certo = 0
+        except:
+            print("\ncolocar apenas numericos\n")
 
 #excluir uma amostra
 def excluir_amostra():
-    id = input("digite o ID da amostra que deseja excluir: ")
-    sql = "DELETE FROM amostras WHERE id = %s"
-    values = (id,)
-    cursor.execute(sql, values)
-    conn.commit()
-    print("amostra excluida com sucesso")
+    certo = 1
+    while certo == 1:
+        try:
+            id = int(input("digite o ID da amostra que deseja excluir: "))
+            sql = "DELETE FROM amostras WHERE id = %s"
+            values = (id,)
+            cursor.execute(sql, values)
+            conn.commit()
+            print("\namostra excluida com sucesso")
+            certo = 0
+        except:
+            print("\ncoloque um id valido\n")
 
 #alterar uma amostra
 def alterar_amostra():
-    id = input("digite o ID da amostra que deseja alterar: ")
-    o3 = float(input("digite o novo valor de O3 da amostra: "))
-    co = float(input("digite o novo valor de CO da amostra: "))
-    no2 = float(input("digite o novo valor de NO2 da amostra: "))
-    so2 = float(input("digite o novo valor de SO2 da amostra: "))
-    mp10 = float(input("digite o novo valor de MP10 da amostra: "))
-    mp25 = float(input("digite o novo valor de MP25 da amostra: "))
-    sql = "UPDATE amostras SET o3 = %s, co = %s, no2 = %s, so2 = %s, mp10 = %s, mp25 = %s WHERE id = %s"
-    values = (o3, co, no2, so2, mp10, mp25, id)
-    cursor.execute(sql, values)
-    conn.commit()
-    print("amostra alterada com sucesso")
+    certo = 1
+    while certo == 1:
+        try:
+            id = int(input("digite o ID da amostra que deseja alterar: "))
+            o3 = float(input("digite o novo valor de O3 da amostra: "))
+            co = float(input("digite o novo valor de CO da amostra: "))
+            no2 = float(input("digite o novo valor de NO2 da amostra: "))
+            so2 = float(input("digite o novo valor de SO2 da amostra: "))
+            mp10 = float(input("digite o novo valor de MP10 da amostra: "))
+            mp25 = float(input("digite o novo valor de MP25 da amostra: "))
+            sql = "UPDATE amostras SET o3 = %s, co = %s, no2 = %s, so2 = %s, mp10 = %s, mp25 = %s WHERE id = %s"
+            values = (o3, co, no2, so2, mp10, mp25, id)
+            cursor.execute(sql, values)
+            conn.commit()
+            print("\namostra alterada com sucesso")
+            certo = 0
+        except:
+            print("\ncolocar apenas numericos\n")
 
 #mostrar todas as amostras
 def mostrar_amostras():
@@ -59,12 +78,8 @@ def mostrar_amostras():
 # testar as amostras
 def teste_amostra():
 
-
-    # consulata
     cursor.execute(f"SELECT o3, co, no2, so2, mp10, mp25 FROM amostras")
 
-
-    # memorias para a soma
     soma_o3 = 0
     soma_co = 0
     soma_no2 = 0
@@ -74,8 +89,6 @@ def teste_amostra():
 
     num_amostras = 0
 
-
-    # soma de cada dado da amostra
     for (o3, co, no2, so2, mp10, mp25) in cursor:
         soma_o3 += o3
         soma_co += co
@@ -85,8 +98,6 @@ def teste_amostra():
         soma_mp25 += mp25
         num_amostras += 1
 
-
-    # calcula a média de cada amostra
     media_o3 = soma_o3 / num_amostras
     media_co = soma_co / num_amostras
     media_no2 = soma_no2 / num_amostras
@@ -141,4 +152,4 @@ while True:
     elif opcao == "6":
         break
     else:
-        print("escolha uma das opcoes abaixo")
+        print("escolha uma das opcoes abaixo") 
