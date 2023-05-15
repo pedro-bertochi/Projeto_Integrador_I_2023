@@ -113,7 +113,7 @@ def teste_amostra():
     elif media_o3 <= 100 and media_co <= 9 and media_no2 <= 200 and media_so2 <= 20 and media_mp10 <= 50 and media_mp25 <= 25:
         qualidade_do_ar = "A qualidade do ar está boa."
         efeito_saude = ""
-    elif media_o3 <= 130 and media_co <= 11 and media_no2 <= 240 and smedia_so2o2 <= 40 and media_mp10 <= 100 and media_mp25 <= 50:
+    elif media_o3 <= 130 and media_co <= 11 and media_no2 <= 240 and media_so2 <= 40 and media_mp10 <= 100 and media_mp25 <= 50:
         qualidade_do_ar = "A qualidade do ar está moderada."
         efeito_saude = "Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas) podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada."
     elif media_o3 <= 160 and media_co <= 13 and media_no2 <= 320 and media_so2 <= 365 and media_mp10 <= 150 and media_mp25 <= 75:
